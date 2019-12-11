@@ -11,5 +11,16 @@
 
     <artifactId>erya_file</artifactId>
 
+    <properties>
+        <fastdfs.version>1.26.7</fastdfs.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.github.tobato</groupId>
+            <artifactId>fastdfs-client</artifactId>
+            <version>${fastdfs.version}</version>
+        </dependency>
+    </dependencies>
 
 </project>
