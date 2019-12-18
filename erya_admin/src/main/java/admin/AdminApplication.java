@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-@MapperScan("cn.ych.erya.admin.mapper")
+@MapperScan("admin.mapper")
 @SpringBootApplication
 @EnableTransactionManagement
 public class AdminApplication {

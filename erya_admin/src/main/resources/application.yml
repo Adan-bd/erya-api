@@ -1,0 +1,24 @@
+server:
+  port: 8083
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/erya?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowPublicKeyRetrieval=true
+    username: root
+    password: YCH670989882@qq.com
+    hikari:
+      maximum-pool-size: 1
+      minimum-idle: 1
+  redis:
+    jedis:
+      pool:
+        min-idle: 1
+        max-idle: 1
+        max-active: 1
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  typeAliasesPackage: admin.pojo
+logging:
+  level:
+    root: info
+  path: /root/logs/admin
