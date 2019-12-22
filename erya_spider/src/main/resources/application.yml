@@ -1,6 +1,8 @@
 server:
   port: 8082
 spring:
+  application:
+    name: erya-spider
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/erya?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowPublicKeyRetrieval=true
@@ -22,3 +24,9 @@ logging:
   level:
     root: info
   path: /root/logs/spider
+eureka:
+  client:
+    service‐url:
+      defaultZone: http://localhost:8000/eureka
+  instance:
+    prefer‐ip‐address: true
