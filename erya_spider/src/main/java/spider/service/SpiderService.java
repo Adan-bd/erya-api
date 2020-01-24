@@ -1,10 +1,7 @@
 package spider.service;
 
-import spider.pojo.AnswerTemp;
-
-import java.util.Set;
-import java.util.concurrent.CompletableFuture;
+import common.vo.Questions;
 
 public interface SpiderService {
-    CompletableFuture<Set<AnswerTemp>> findAnswer(String question);
+    void findAnswer(Questions questions);
 }

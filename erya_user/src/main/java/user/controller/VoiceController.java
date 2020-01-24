@@ -16,7 +16,6 @@ public class VoiceController {
 
     private AiService aiService;
 
-    @Autowired
     public VoiceController(AiService aiService) {
         this.aiService = aiService;
     }

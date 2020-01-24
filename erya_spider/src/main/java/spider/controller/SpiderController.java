@@ -7,21 +7,12 @@ import org.springframework.web.bind.annotation.RestController;
 import spider.processor.EryaProcessor;
 import spider.service.SpiderService;
 
-import javax.annotation.Resource;
-
 @RestController("spider")
 public class SpiderController {
-    @Resource(name = "spiderService")
-    private SpiderService spiderService;
     private EryaProcessor eryaProcessor;
 
-    public SpiderController(EryaProcessor eryaProcessor) {
+    public SpiderController( EryaProcessor eryaProcessor) {
         this.eryaProcessor = eryaProcessor;
-    }
-
-    @PostMapping("getAnswer")
-    public void getAnswer(@RequestParam("question") String question) {
-        spiderService.findAnswer(question);
     }
 
     @PostMapping("spider/{thread}/{sleep}")

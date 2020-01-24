@@ -1,6 +1,7 @@
 package file.controller;
 
 import file.service.FileService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +19,6 @@ public class FileController {
     @PostMapping("/upload")
     public ResponseEntity<Void> upload(@RequestParam("file") MultipartFile multipartFile) {
         fileService.upload(multipartFile);
-        return null;
+        return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 }

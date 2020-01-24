@@ -1,13 +1,12 @@
 package user.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import user.mapper.UserMapper;
 import user.pojo.User;
 import user.service.UserService;
 import user.vo.Login;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-import org.springframework.web.client.RestTemplate;
 
 @Service
 public class UserServiceImp implements UserService {
@@ -23,13 +22,12 @@ public class UserServiceImp implements UserService {
     @Override
     public User Login(String code) {
         String openid = getOpenid(code);
-        if (StringUtils.isEmpty(openid))
-            return null;
-        User user1 = userMapper.selectById(openid);
-        if (user1 == null) {
+        User user = userMapper.selectById(openid);
+        if (user == null) {
             userMapper.insertByOpenid(openid);
-            return userMapper.selectById(openid);
-        } else return user1;
+            user = userMapper.selectById(openid);
+        }
+        return user;
     }
 
     private String getOpenid(String code) {
@@ -39,12 +37,17 @@ public class UserServiceImp implements UserService {
                         + code + "&grant_type=authorization_code", Login.class);
         if (login != null)
             return login.getOpenid();
-        else return null;
+        return null;
     }
 
     @Override
     public int change(User user) {
         return userMapper.updateById(user);
+    }
+
+    @Override
+    public User getNum(String openid) {
+        return userMapper.selectById(openid);
     }
 
 }

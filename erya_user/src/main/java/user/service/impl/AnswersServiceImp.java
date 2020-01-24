@@ -1,17 +1,19 @@
 package user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import user.mapper.AnswerMapper;
-import user.pojo.Answer;
-import user.service.AnswersService;
-import user.vo.Answers;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import common.vo.Questions;
+import lombok.Data;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.RestTemplate;
+import user.mapper.AnswerMapper;
+import user.mapper.AnswerTempMapper;
+import user.pojo.Answer;
+import user.pojo.AnswerTemp;
+import user.service.AnswersService;
+import user.vo.Answers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,35 +25,41 @@ import java.util.concurrent.Future;
 public class AnswersServiceImp implements AnswersService {
     private AnswerMapper answerMapper;
     private ThreadPoolTaskExecutor taskExecutor;
-    private RestTemplate restTemplate;
+    private RabbitTemplate rabbitTemplate;
+    private AnswerTempMapper answerTempMapper;
 
-    public AnswersServiceImp(AnswerMapper answerMapper, ThreadPoolTaskExecutor taskExecutor, RestTemplate restTemplate) {
+    public AnswersServiceImp(AnswerMapper answerMapper, ThreadPoolTaskExecutor taskExecutor, RabbitTemplate rabbitTemplate, AnswerTempMapper answerTempMapper) {
         this.answerMapper = answerMapper;
         this.taskExecutor = taskExecutor;
-        this.restTemplate = restTemplate;
+        this.rabbitTemplate = rabbitTemplate;
+        this.answerTempMapper = answerTempMapper;
     }
 
     @Override
-    public List<Answers> selectAnswers(List<String> questions) {
+    public List<Answers> selectAnswers(Questions ques) {
+        List<String> questions = ques.getQuestions();
         int size = questions.size();
         List<Answers> answersList = new ArrayList<>(size);
-        List<Future<List<Answer>>> futures = new ArrayList<>();
+        List<Future<Result>> futures = new ArrayList<>();
         for (String question : questions) {
-            Future<List<Answer>> future = taskExecutor.submit(new SelectTask(question, answerMapper));
+            Future<Result> future = taskExecutor.submit(new SelectTask(question, answerMapper));
             futures.add(future);
         }
+        List<String> answerList = new ArrayList<>();
         int i = 0;
-        for (Future<List<Answer>> future : futures) {
+        for (Future<Result> future : futures) {
             try {
+                Result result = future.get();
                 Answers answers = new Answers();
-                List<Answer> list = future.get();
-                if (list.size() != 0) {
+                answers.setFlag(result.isFlag());
+                List<Answer> list = result.getAnswers();
+                if (list != null) {
                     answers.setAnswers(list);
                 } else {
                     Answer answer = new Answer();
                     answer.setQuestion(questions.get(i));
                     answer.setAnswer("没有找到答案");
-                    getAnswers(questions.get(i));
+                    answerList.add(questions.get(i));
                     List<Answer> list1 = new ArrayList<>();
                     list1.add(answer);
                     answers.setAnswers(list1);
@@ -62,22 +70,34 @@ public class AnswersServiceImp implements AnswersService {
                 e.printStackTrace();
             }
         }
+        if (answerList.size() > 0) {
+            Questions spiderQuestion = new Questions();
+            spiderQuestion.setQuestions(answerList);
+            spiderQuestion.setOpenid(ques.getOpenid());
+            spiderQuestion.setFlag(ques.isFlag());
+            rabbitTemplate.convertAndSend("spider", spiderQuestion);
+        }
         return answersList;
     }
 
-    private void getAnswers(String question) {
-        taskExecutor.submit(() -> {
-            MultiValueMap<String, Object> postParameters = new LinkedMultiValueMap<>();
-            postParameters.add("question", question);
-            HttpHeaders headers = new HttpHeaders();
-            headers.add("Content-Type", "application/x-www-form-urlencoded");
-            HttpEntity<MultiValueMap<String, Object>> r = new HttpEntity<>(postParameters, headers);
-            restTemplate.postForObject("https://spider.erya.ychstudy.cn/getAnswer", r, Void.class);
-        });
-//        restTemplate.postForObject("http://localhost:8082/getAnswer", r, Void.class);
+    @Override
+    public IPage<Answer> selectAnswers(int pageNo, int pageSize, String question) {
+        IPage<Answer> page = new Page<>(pageNo, pageSize);
+        QueryWrapper<Answer> wrapper = new QueryWrapper<>();
+        wrapper.like("question", "%" + question + "%");
+        return answerMapper.selectPage(page, wrapper);
     }
 
-    private static class SelectTask implements Callable<List<Answer>> {
+    @Override
+    public IPage<AnswerTemp> selectAnswerTemp(int pageNo, int pageSize, String search) {
+        IPage<AnswerTemp> page = new Page<>(pageNo, pageSize);
+        QueryWrapper<AnswerTemp> wrapper = new QueryWrapper<>();
+        wrapper.like("question", "%" + search + "%").orderByDesc("question");
+        return answerTempMapper.selectPage(page, wrapper);
+    }
+
+
+    private static class SelectTask implements Callable<Result> {
         private String question;
         private AnswerMapper answerMapper;
 
@@ -87,11 +107,26 @@ public class AnswersServiceImp implements AnswersService {
         }
 
         @Override
-        public List<Answer> call() {
+        public Result call() {
+            Result result = new Result();
             QueryWrapper<Answer> wrapper = new QueryWrapper<>();
             wrapper.like("question", "%" + question + "%");
-            return answerMapper.selectList(wrapper);
+            Integer res = answerMapper.selectCount(wrapper);
+            if (res == 0) {
+                return result;
+            } else if (res > 10) {
+                result.setFlag(true);
+            }
+            wrapper.last("limit 10");
+            result.setAnswers(answerMapper.selectList(wrapper));
+            return result;
         }
+    }
+
+    @Data
+    private static class Result {
+        private List<Answer> answers;
+        private boolean flag;
     }
 
 }

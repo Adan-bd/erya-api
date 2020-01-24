@@ -1,7 +1,9 @@
 package spider.service.imp;
 
+import common.vo.Questions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
@@ -16,22 +18,23 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Callable;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
-@Service("spiderService")
+@Service
 public class SpiderServiceImp implements SpiderService {
     private List<SimpleSpiderService> list = new ArrayList<>();
     private AnswerTempMapper answerTempMapper;
     private Logger logger = LoggerFactory.getLogger(SpiderServiceImp.class);
     private EryaPagesListProcessor eryaPagesListProcessor;
     private ThreadPoolTaskExecutor taskExecutor;
+    private RabbitTemplate rabbitTemplate;
 
-    public SpiderServiceImp(AnswerTempMapper answerTempMapper, EryaPagesListProcessor eryaPagesListProcessor, ThreadPoolTaskExecutor taskExecutor) {
+    public SpiderServiceImp(AnswerTempMapper answerTempMapper, EryaPagesListProcessor eryaPagesListProcessor, ThreadPoolTaskExecutor taskExecutor, RabbitTemplate rabbitTemplate) {
         this.answerTempMapper = answerTempMapper;
         this.eryaPagesListProcessor = eryaPagesListProcessor;
         this.taskExecutor = taskExecutor;
+        this.rabbitTemplate = rabbitTemplate;
     }
 
     @Autowired
@@ -94,24 +97,9 @@ public class SpiderServiceImp implements SpiderService {
         list.add(xuanxiu365Imp);
     }
 
-    //    @Async
-    @Override
-    public CompletableFuture<Set<AnswerTemp>> findAnswer(String question) {
+    public Set<AnswerTemp> findAnswer(String question) {
         String url = "https://www.yosonia.cn/page/1?s=";
         eryaPagesListProcessor.start(url + question, 1, 3000);
-//        Set<AnswerTemp> set = new HashSet<>();
-//        for (SpiderService spiderService : list) {
-//            try {
-//                set.addAll(spiderService.findAnswer(question).get());
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        logger.info(set.toString());
-//        for (AnswerTemp answerTemp : set) {
-//            answerTempMapper.insert(answerTemp);
-//        }
-//        return CompletableFuture.completedFuture(set)
         List<Future<Set<AnswerTemp>>> lists = new ArrayList<>(list.size());
         for (SimpleSpiderService simpleSpiderService : list) {
             lists.add(taskExecutor.submit(new myThread(simpleSpiderService, question)));
@@ -128,10 +116,33 @@ public class SpiderServiceImp implements SpiderService {
         for (AnswerTemp answerTemp : set) {
             answerTempMapper.insert(answerTemp);
         }
-        return CompletableFuture.completedFuture(set);
+        return set;
     }
 
-    static class myThread implements Callable<Set<AnswerTemp>> {
+    @Override
+    public void findAnswer(Questions spiderQuestion) {
+        List<String> list = new ArrayList<>();
+        List<String> questions = spiderQuestion.getQuestions();
+        for (String question : questions) {
+            Set<AnswerTemp> answer = findAnswer(question);
+            if (answer.size() != 0) {
+                for (AnswerTemp answerTemp : answer) {
+                    String question1 = answerTemp.getQuestion();
+                    if (question1.matches(".*" + question + ".*")) {
+                        list.add(question);
+                        break;
+                    }
+                }
+            }
+        }
+        System.out.println(spiderQuestion);
+        if (spiderQuestion.isFlag() && list.size() != 0) {
+            spiderQuestion.setQuestions(list);
+            rabbitTemplate.convertAndSend("user_notice", spiderQuestion);
+        }
+    }
+
+    private static class myThread implements Callable<Set<AnswerTemp>> {
         private SimpleSpiderService simpleSpiderService;
         private String question;
 

@@ -1,11 +1,5 @@
 package user.service.impl;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import user.service.AiService;
-import user.vo.Text;
-import user.vo.Token;
-import user.vo.Voice;
 import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -13,6 +7,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import user.service.AiService;
+import user.vo.Text;
+import user.vo.Token;
+import user.vo.Voice;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -61,7 +59,6 @@ public class AiServiceImp implements AiService {
     }
 
     private Text baiduApi(byte[] bytes) {
-        ObjectMapper objectMapper = new ObjectMapper();
         Voice voice = new Voice();
         voice.setToken(token);
         voice.setChannel(1);
@@ -78,19 +75,9 @@ public class AiServiceImp implements AiService {
         voice.setFormat("pcm");
         voice.setLen(bytes.length);
         voice.setSpeech(Base64.getEncoder().encodeToString(bytes));
-        String json = null;
-        try {
-            json = objectMapper.writeValueAsString(voice);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        if (json == null)
-            return null;
         HttpHeaders headers = new HttpHeaders();
-//        MediaType type = MediaType.parseMediaType("application/json; charset=UTF-8");
         headers.setContentType(MediaType.APPLICATION_JSON);
-//        headers.add("Accept", MediaType.APPLICATION_JSON.toString());
-        HttpEntity<String> formEntity = new HttpEntity<>(json, headers);
+        HttpEntity<Voice> formEntity = new HttpEntity<>(voice, headers);
         String reqText = "http://vop.baidu.com/server_api";
         ResponseEntity<Text> responseEntity = restTemplate.postForEntity(reqText, formEntity, Text.class);
         return responseEntity.getBody();

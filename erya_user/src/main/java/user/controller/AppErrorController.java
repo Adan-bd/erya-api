@@ -1,4 +1,5 @@
 package user.controller;
+import org.springframework.http.HttpStatus;
 import user.pojo.AppError;
 import user.service.AppErrorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class AppErrorController {
     private AppErrorService appErrorService;
 
-    @Autowired
     public AppErrorController(AppErrorService appErrorService) {
         this.appErrorService = appErrorService;
     }
@@ -19,6 +19,6 @@ public class AppErrorController {
     @PostMapping("appReporter")
     public ResponseEntity<Void> appReporter(@RequestBody AppError appError) {
         appErrorService.insertAppError(appError);
-        return null;
+        return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 }

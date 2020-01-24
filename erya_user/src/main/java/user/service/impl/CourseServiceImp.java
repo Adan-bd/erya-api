@@ -27,7 +27,6 @@ public class CourseServiceImp implements CourseService {
         return courseMapper.selectPage(page, queryWrapper);
     }
 
-    @Cacheable(value = "answer",key = "#id")
     @Override
     public Course selectCourseById(int id) {
         return courseMapper.selectById(id);

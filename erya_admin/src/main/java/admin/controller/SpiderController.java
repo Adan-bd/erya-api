@@ -44,9 +44,4 @@ public class SpiderController {
     public ResponseEntity<Integer> modify(@RequestBody Spider answer) {
         return ResponseEntity.status(HttpStatus.OK).body(spiderService.modifySpider(answer));
     }
-
-    @PostMapping("startSpider/{thread}/{sleep}")
-    public void spider(@RequestParam("url") String url, @PathVariable("thread") int thread, @PathVariable("sleep") int sleep) {
-       spiderService.start(url, thread, sleep);
-    }
 }

@@ -16,6 +16,4 @@ public interface SpiderService {
     int mergeAll();
 
     int merge(List<Integer> list);
-
-    void start(String url, int thread, int sleep);
 }

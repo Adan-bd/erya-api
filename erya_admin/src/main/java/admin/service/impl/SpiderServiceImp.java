@@ -22,12 +22,10 @@ import java.util.List;
 public class SpiderServiceImp implements SpiderService {
     private SpiderMapper spiderMapper;
     private AnswerMapper answerMapper;
-    private RestTemplate restTemplate;
 
-    public SpiderServiceImp(SpiderMapper spiderMapper, AnswerMapper answerMapper, RestTemplate restTemplate) {
+    public SpiderServiceImp(SpiderMapper spiderMapper, AnswerMapper answerMapper) {
         this.spiderMapper = spiderMapper;
         this.answerMapper = answerMapper;
-        this.restTemplate = restTemplate;
     }
 
     @Override
@@ -73,15 +71,5 @@ public class SpiderServiceImp implements SpiderService {
             spiderMapper.deleteById(spider.getId());
         }
         return res;
-    }
-
-    @Override
-    public void start(String url, int thread, int sleep) {
-        MultiValueMap<String, Object> postParameters = new LinkedMultiValueMap<>();
-        postParameters.add("url", url);
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/x-www-form-urlencoded");
-        HttpEntity<MultiValueMap<String, Object>> r = new HttpEntity<>(postParameters, headers);
-        restTemplate.postForObject("https://spider.erya.ychstudy.cn/spider/"+thread+"/"+sleep, r, Void.class);
     }
 }
