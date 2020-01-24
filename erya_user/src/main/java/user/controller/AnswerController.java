@@ -35,4 +35,11 @@ public class AnswerController {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(result);
     }
+
+    @PostMapping("query/{openid}/{time}")
+    public ResponseEntity<Result> queryQuestion(@PathVariable("openid") String openid, @PathVariable("time") Long time) {
+        Result result = new Result(answersService.selectQuestions(openid,time));
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(result);
+    }
 }
