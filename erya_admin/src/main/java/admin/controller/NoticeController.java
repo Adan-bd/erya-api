@@ -15,23 +15,23 @@ public class NoticeController {
         this.noticeService = noticeService;
     }
 
-    @PostMapping(path = "getNotice", produces = "text/json;charset=utf-8")
+    @PostMapping(path = "notece/getNotice", produces = "text/json;charset=utf-8")
     public ResponseEntity<String> getNotice() {
         return ResponseEntity.status(HttpStatus.OK).body(noticeService.getNotice());
     }
 
-    @PostMapping("setNotice")
+    @PostMapping("notece/setNotice")
     public ResponseEntity<Void> setNotice(@RequestParam("notice") String notice) {
         noticeService.setNotice(notice);
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
-    @PostMapping("getDeploy")
+    @PostMapping("notece/getDeploy")
     public ResponseEntity<String> getDeploy() {
         return ResponseEntity.status(HttpStatus.OK).body(noticeService.getDeploy());
     }
 
-    @PostMapping("setDeploy")
+    @PostMapping("notece/setDeploy")
     public ResponseEntity<Void> setDeploy(@RequestParam("deploy") String deploy) {
         noticeService.setDeploy(deploy);
         return ResponseEntity.status(HttpStatus.OK).body(null);

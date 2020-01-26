@@ -20,13 +20,13 @@ public class ProblemController {
         this.problemService = problemService;
     }
 
-    @PostMapping("getProblem/{page}/{pageSize}")
+    @PostMapping("problem/getProblem/{page}/{pageSize}")
     public ResponseEntity<IPage<Problem>> getProblem(@PathVariable("page") int page, @PathVariable("pageSize") int pageSize, @RequestParam("search") String search) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(problemService.selectProblem(page, pageSize, search));
     }
 
-    @PostMapping("deleteProblem")
+    @PostMapping("problem/deleteProblem")
     public ResponseEntity<Integer> deleteProblem(@RequestBody List<Integer> list) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(problemService.deleteProblem(list));

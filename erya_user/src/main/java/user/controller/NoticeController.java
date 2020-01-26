@@ -20,7 +20,7 @@ public class NoticeController {
         this.noticeService = noticeService;
     }
 
-    @PostMapping(path = "getNotice/{intent}", produces = "text/json;charset=utf-8")
+    @PostMapping(path = "notice/getNotice/{intent}", produces = "text/json;charset=utf-8")
     public ResponseEntity<String> getNotice(@PathVariable("intent") String intent) {
         if (intent.equals("notice")) {
             return ResponseEntity.status(HttpStatus.OK).body(noticeService.getNotice());

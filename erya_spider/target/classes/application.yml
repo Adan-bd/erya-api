@@ -1,5 +1,5 @@
 server:
-  port: 8082
+  port: 8004
 spring:
   application:
     name: erya-spider
@@ -19,6 +19,10 @@ spring:
         queue-capacity: 120
   rabbitmq:
     host: 47.96.165.193
+  mvc:
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: false
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
   typeAliasesPackage: spider.pojo

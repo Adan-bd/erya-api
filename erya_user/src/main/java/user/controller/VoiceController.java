@@ -20,7 +20,7 @@ public class VoiceController {
         this.aiService = aiService;
     }
 
-    @PostMapping(path = "/voice/text",produces = "text/json;charset=utf-8")
+    @PostMapping(path = "voice/text",produces = "text/json;charset=utf-8")
     public ResponseEntity<String> getText(@RequestParam("voice") MultipartFile multipartFile) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(aiService.getText(multipartFile.getInputStream()));

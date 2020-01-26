@@ -16,7 +16,7 @@ public class AppErrorController {
         this.appErrorService = appErrorService;
     }
 
-    @PostMapping("appReporter")
+    @PostMapping("appErr/appReporter")
     public ResponseEntity<Void> appReporter(@RequestBody AppError appError) {
         appErrorService.insertAppError(appError);
         return ResponseEntity.status(HttpStatus.OK).body(null);

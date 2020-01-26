@@ -17,7 +17,7 @@ public class ProblemController {
         this.problemService = problemService;
     }
 
-    @PostMapping("problem")
+    @PostMapping("problem/upload")
     public ResponseEntity<Void> problem(@RequestBody Problem problem) {
         problemService.insertProblem(problem);
         return ResponseEntity.status(HttpStatus.OK).body(null);

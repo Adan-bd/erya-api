@@ -20,19 +20,19 @@ public class AppErrorController {
     }
 
 
-    @PostMapping("getAppError/{page}/{pageSize}")
+    @PostMapping("appErr/getAppError/{page}/{pageSize}")
     public ResponseEntity<IPage<AppError>> getAppError(@PathVariable("page") int page, @PathVariable("pageSize") int pageSize, @RequestParam("search") String search) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(appErrorService.selectAppError(page, pageSize, search));
     }
 
-    @PostMapping("deleteAppError")
+    @PostMapping("appErr/deleteAppError")
     public ResponseEntity<Integer> deleteAppError(@RequestBody List<Integer> list) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(appErrorService.deleteAppError(list));
     }
 
-    @PostMapping("appError/clear")
+    @PostMapping("appErr/clear")
     public ResponseEntity<Integer> clear() {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(appErrorService.clearAppError());

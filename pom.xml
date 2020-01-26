@@ -16,7 +16,6 @@
         <module>erya_auth</module>
         <module>erya_common</module>
         <module>erya_zuul</module>
-        <module>erya_config</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

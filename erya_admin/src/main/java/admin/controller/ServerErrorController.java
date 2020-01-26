@@ -19,19 +19,19 @@ public class ServerErrorController {
         this.serverErrorService = serverErrorService;
     }
 
-    @PostMapping("getServerError/{page}/{pageSize}")
+    @PostMapping("serverErr/getServerError/{page}/{pageSize}")
     public ResponseEntity<IPage<ServerError>> getServerError(@PathVariable("page") int page, @PathVariable("pageSize") int pageSize, @RequestParam("search") String search) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(serverErrorService.selectServerError(page, pageSize, search));
     }
 
-    @PostMapping("deleteServerError")
+    @PostMapping("serverErr/deleteServerError")
     public ResponseEntity<Integer> deleteServerError(@RequestBody List<Integer> list) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(serverErrorService.deleteServerError(list));
     }
 
-    @PostMapping("serverError/clear")
+    @PostMapping("serverErr/serverError/clear")
     public ResponseEntity<Integer> clear() {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(serverErrorService.clear());

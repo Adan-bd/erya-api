@@ -1,5 +1,5 @@
 server:
-  port: 8083
+  port: 8005
 spring:
   application:
     name: erya-admin
@@ -19,6 +19,10 @@ spring:
         max-active: 1
     host: 47.96.165.193
     password: YCH670989882@qq.com
+  mvc:
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: false
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
   typeAliasesPackage: admin.pojo

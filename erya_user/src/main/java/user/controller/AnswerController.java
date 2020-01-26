@@ -15,7 +15,7 @@ public class AnswerController {
         this.answersService = answersService;
     }
 
-    @PostMapping("getAnswers")
+    @PostMapping("answer/getAnswers")
     public ResponseEntity<Result> getAnswers(@RequestBody Questions questions) {
         Result result = new Result(answersService.selectAnswers(questions));
         return ResponseEntity.status(HttpStatus.OK)
