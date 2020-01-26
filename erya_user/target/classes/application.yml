@@ -5,7 +5,7 @@ spring:
     name: erya-user
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://47.96.165.193:3306/erya?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://47.96.165.193:3306/erya?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowPublicKeyRetrieval=true&serverTimezone=GMT%2B8
     username: root
     password: YCH670989882@qq.com
     hikari:
@@ -17,7 +17,7 @@ spring:
         min-idle: 1
         max-idle: 2
         max-active: 2
-    host: localhost
+    host: 47.96.165.193
     password: YCH670989882@qq.com
   task:
     execution:
@@ -29,11 +29,11 @@ spring:
     multipart:
       max-file-size: 30MB
       max-request-size: 30MB
-  cache:
-    type: redis
-    redis:
-      cache-null-values: false
-      time-to-live: 30d
+#  cache:
+#    type: redis
+#    redis:
+#      cache-null-values: false
+#      time-to-live: 30d
   mvc:
     throw-exception-if-no-handler-found: true
   resources:

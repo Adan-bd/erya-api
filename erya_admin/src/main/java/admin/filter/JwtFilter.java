@@ -23,7 +23,7 @@ public class JwtFilter extends HandlerInterceptorAdapter {
                              HttpServletResponse response, Object handler) {
         String token = request.getHeader("token");
         if (token == null) {
-            throw new EryaException(EryaEnum.TOKEN_INVALID);
+            throw new EryaException(EryaEnum.REQUEST_INVALID);
         }
         String roles = stringRedisTemplate.opsForValue().get(token);
         if (roles == null) {

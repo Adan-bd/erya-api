@@ -10,12 +10,16 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 import user.mapper.AnswerMapper;
 import user.mapper.AnswerTempMapper;
+import user.mapper.QueryMapper;
 import user.pojo.Answer;
 import user.pojo.AnswerTemp;
+import user.pojo.Query;
 import user.service.AnswersService;
 import user.vo.Answers;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -27,13 +31,16 @@ public class AnswersServiceImp implements AnswersService {
     private ThreadPoolTaskExecutor taskExecutor;
     private RabbitTemplate rabbitTemplate;
     private AnswerTempMapper answerTempMapper;
+    private QueryMapper queryMapper;
 
-    public AnswersServiceImp(AnswerMapper answerMapper, ThreadPoolTaskExecutor taskExecutor, RabbitTemplate rabbitTemplate, AnswerTempMapper answerTempMapper) {
+    public AnswersServiceImp(AnswerMapper answerMapper, ThreadPoolTaskExecutor taskExecutor, RabbitTemplate rabbitTemplate, AnswerTempMapper answerTempMapper, QueryMapper queryMapper) {
         this.answerMapper = answerMapper;
         this.taskExecutor = taskExecutor;
         this.rabbitTemplate = rabbitTemplate;
         this.answerTempMapper = answerTempMapper;
+        this.queryMapper = queryMapper;
     }
+
 
     @Override
     public List<Answers> selectAnswers(Questions ques) {
@@ -94,6 +101,19 @@ public class AnswersServiceImp implements AnswersService {
         QueryWrapper<AnswerTemp> wrapper = new QueryWrapper<>();
         wrapper.like("question", "%" + search + "%").orderByDesc("question");
         return answerTempMapper.selectPage(page, wrapper);
+    }
+
+    @Override
+    public List<String> selectQuestions(String openid, Long time) {
+        QueryWrapper<Query> queryWrapper = new QueryWrapper<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        queryWrapper.select("content")
+                .eq("openid", openid)
+                .eq("time", sdf.format(new Date(time)));
+        Query query = queryMapper.selectOne(queryWrapper);
+        if (query == null)
+            return null;
+        return query.getContent();
     }
 
 

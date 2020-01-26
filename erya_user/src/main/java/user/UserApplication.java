@@ -9,9 +9,9 @@ import org.springframework.context.annotation.ComponentScan;
 
 @MapperScan("user.mapper")
 @SpringBootApplication
-@EnableCaching
+//@EnableCaching
 @EnableEurekaClient
-//@ComponentScan(basePackages = {"common", "user"})
+@ComponentScan(basePackages = {"common", "user"})
 public class UserApplication {
     public static void main(String[] args) {
         SpringApplication.run(UserApplication.class, args);

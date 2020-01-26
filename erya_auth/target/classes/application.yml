@@ -17,7 +17,7 @@ spring:
         min-idle: 1
         max-idle: 2
         max-active: 2
-    host: localhost
+    host: 47.96.165.193
     password: YCH670989882@qq.com
   cache:
     type: redis

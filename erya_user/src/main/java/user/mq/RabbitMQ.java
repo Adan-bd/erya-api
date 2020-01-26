@@ -46,6 +46,8 @@ public class RabbitMQ {
         HttpEntity<SendRequest> r = new HttpEntity<>(sendRequest, headers);
         assert access_token != null;
         restTemplate.postForObject("https://api.weixin.qq.com/cgi-bin/message/subscribe/send?access_token=" + access_token.getAccess_token(), r, Void.class);
+//        String s = restTemplate.postForObject("https://api.weixin.qq.com/cgi-bin/message/subscribe/send?access_token=" + access_token.getAccess_token(), r, String.class);
+//        System.out.println(s);
     }
 
     @Data

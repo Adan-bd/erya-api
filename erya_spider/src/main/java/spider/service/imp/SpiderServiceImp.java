@@ -135,7 +135,6 @@ public class SpiderServiceImp implements SpiderService {
                 }
             }
         }
-        System.out.println(spiderQuestion);
         if (spiderQuestion.isFlag() && list.size() != 0) {
             spiderQuestion.setQuestions(list);
             rabbitTemplate.convertAndSend("user_notice", spiderQuestion);

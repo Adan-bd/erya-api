@@ -14,4 +14,6 @@ public interface AnswersService {
     IPage<Answer> selectAnswers(int page, int pageSize, String search);
 
     IPage<AnswerTemp> selectAnswerTemp(int page, int pageSize, String search);
+
+    List<String> selectQuestions(String openid, Long time);
 }

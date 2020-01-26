@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-@TableName("query")
+@TableName(value = "query",autoResultMap = true)
 public class Query {
     @TableId(type = IdType.AUTO)
     private int id;

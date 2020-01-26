@@ -37,7 +37,7 @@ public class RequestFilter extends ZuulFilter {
         HttpServletRequest request = requestContext.getRequest();
         String token = request.getHeader("token");
         if (token == null) {
-            throw new EryaException(EryaEnum.TOKEN_INVALID);
+            throw new EryaException(EryaEnum.REQUEST_INVALID);
         }
         String roles = stringRedisTemplate.opsForValue().get(token);
         if (roles == null) {

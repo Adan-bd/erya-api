@@ -25,4 +25,14 @@ public class NoticeServiceImp implements NoticeService {
     public void setNotice(String notice) {
         redisTemplate.opsForValue().set("notice", notice);
     }
+
+    @Override
+    public String getDeploy() {
+        return redisTemplate.opsForValue().get("deploy");
+    }
+
+    @Override
+    public void setDeploy(String deploy) {
+        redisTemplate.opsForValue().set("deploy", deploy);
+    }
 }
