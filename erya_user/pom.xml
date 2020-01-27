@@ -37,11 +37,11 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>${mybatis.plus.version}</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>com.sun.media</groupId>-->
-<!--            <artifactId>codec</artifactId>-->
-<!--            <version>1.0</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.sun.media</groupId>-->
+        <!--            <artifactId>codec</artifactId>-->
+        <!--            <version>1.0</version>-->
+        <!--        </dependency>-->
         <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
         <dependency>
             <groupId>commons-io</groupId>
@@ -68,4 +68,12 @@
             <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
     </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>
