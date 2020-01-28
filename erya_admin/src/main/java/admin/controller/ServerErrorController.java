@@ -3,6 +3,7 @@ package admin.controller;
 import admin.pojo.ServerError;
 import admin.service.ServerErrorService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import common.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,21 +21,21 @@ public class ServerErrorController {
     }
 
     @PostMapping("serverErr/getServerError/{page}/{pageSize}")
-    public ResponseEntity<IPage<ServerError>> getServerError(@PathVariable("page") int page, @PathVariable("pageSize") int pageSize, @RequestParam("search") String search) {
+    public ResponseEntity<Result> getServerError(@PathVariable("page") int page, @PathVariable("pageSize") int pageSize, @RequestParam("search") String search) {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(serverErrorService.selectServerError(page, pageSize, search));
+                .body(new Result(serverErrorService.selectServerError(page, pageSize, search)));
     }
 
     @PostMapping("serverErr/deleteServerError")
-    public ResponseEntity<Integer> deleteServerError(@RequestBody List<Integer> list) {
+    public ResponseEntity<Result> deleteServerError(@RequestBody List<Integer> list) {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(serverErrorService.deleteServerError(list));
+                .body(new Result(serverErrorService.deleteServerError(list)));
     }
 
     @PostMapping("serverErr/serverError/clear")
-    public ResponseEntity<Integer> clear() {
+    public ResponseEntity<Result> clear() {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(serverErrorService.clear());
+                .body(new Result(serverErrorService.clear()));
 
     }
 }

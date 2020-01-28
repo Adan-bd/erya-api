@@ -1,6 +1,7 @@
 package admin.controller;
 
 import admin.service.NoticeService;
+import common.vo.Result;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,8 +17,8 @@ public class NoticeController {
     }
 
     @PostMapping(path = "notece/getNotice", produces = "text/json;charset=utf-8")
-    public ResponseEntity<String> getNotice() {
-        return ResponseEntity.status(HttpStatus.OK).body(noticeService.getNotice());
+    public ResponseEntity<Result> getNotice() {
+        return ResponseEntity.status(HttpStatus.OK).body(new Result(noticeService.getNotice()));
     }
 
     @PostMapping("notece/setNotice")
@@ -27,8 +28,8 @@ public class NoticeController {
     }
 
     @PostMapping("notece/getDeploy")
-    public ResponseEntity<String> getDeploy() {
-        return ResponseEntity.status(HttpStatus.OK).body(noticeService.getDeploy());
+    public ResponseEntity<Result> getDeploy() {
+        return ResponseEntity.status(HttpStatus.OK).body(new Result(noticeService.getDeploy()));
     }
 
     @PostMapping("notece/setDeploy")
