@@ -1,5 +1,6 @@
 package common.vo;
 
+import common.exception.EryaEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -10,6 +11,11 @@ public class Result {
     private Object data;
 
     public Result(Object data) {
-        this.data = data;
+        if(data instanceof EryaEnum){
+            this.code=((EryaEnum) data).getCode();
+            this.data=((EryaEnum) data).getErrMsg();
+        }else{
+            this.data = data;
+        }
     }
 }

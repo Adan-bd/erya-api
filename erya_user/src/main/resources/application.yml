@@ -39,7 +39,7 @@ spring:
   resources:
     add-mappings: false
   rabbitmq:
-    host: 47.96.165.193
+    host: 121.36.0.253
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
   typeAliasesPackage: user.pojo
@@ -50,6 +50,6 @@ logging:
 eureka:
   client:
     service‐url:
-      defaultZone: http://localhost:8000/eureka
+      defaultZone: http://47.96.165.193:8000/eureka
   instance:
     prefer‐ip‐address: true

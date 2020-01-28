@@ -7,10 +7,18 @@ spring:
    throw-exception-if-no-handler-found: true
  resources:
    add-mappings: false
+ redis:
+   jedis:
+     pool:
+       min-idle: 1
+       max-idle: 2
+       max-active: 2
+   host: 47.96.165.193
+   password: YCH670989882@qq.com
 eureka:
   client:
     service‐url:
-      defaultZone: http://localhost:8000/eureka
+      defaultZone: http://47.96.165.193:8000/eureka
   instance:
     prefer‐ip‐address: true
 zuul:
@@ -27,3 +35,12 @@ zuul:
     erya-auth:
       path: /auth/**
       serviceId: erya-auth
+  host:
+    connect-timeout-millis: 120000
+    socket-timeout-millis: 300000
+#hystrix:
+#  metrics:
+#    polling-interval-ms: 60000
+ribbon:
+  ReadTimeout: 100000  #请求处理的超时时间
+  ConnectTimeout: 60000  #请求连接的超时时间
