@@ -17,7 +17,8 @@ spring:
         min-idle: 1
         max-idle: 1
         max-active: 1
-    host: 47.96.165.193
+#    host: 47.96.165.193
+    host: 134.175.99.101
     password: YCH670989882@qq.com
   mvc:
     throw-exception-if-no-handler-found: true
@@ -33,6 +34,6 @@ logging:
 eureka:
   client:
     service‐url:
-      defaultZone: http://47.96.165.193:8000/eureka
+      defaultZone: http://134.175.99.101:8000/eureka
   instance:
     prefer‐ip‐address: true
