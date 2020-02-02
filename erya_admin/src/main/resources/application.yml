@@ -37,3 +37,4 @@ eureka:
       defaultZone: http://134.175.99.101:8000/eureka
   instance:
     prefer‐ip‐address: true
+    ip-address: 47.96.165.193

@@ -18,7 +18,7 @@ spring:
         core-size: 12
         queue-capacity: 120
   rabbitmq:
-    host: 121.36.0.253
+    host: 47.96.165.193
   mvc:
     throw-exception-if-no-handler-found: true
   resources:
@@ -33,6 +33,7 @@ logging:
 eureka:
   client:
     service‐url:
-      defaultZone: http://47.96.165.193:8000/eureka
+      defaultZone: http://134.175.99.101:8000/eureka
   instance:
     prefer‐ip‐address: true
+    ip-address: 47.96.165.193
