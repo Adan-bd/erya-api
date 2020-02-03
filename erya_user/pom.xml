@@ -37,12 +37,16 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>${mybatis.plus.version}</version>
         </dependency>
-        <!--        <dependency>-->
-        <!--            <groupId>com.sun.media</groupId>-->
-        <!--            <artifactId>codec</artifactId>-->
-        <!--            <version>1.0</version>-->
-        <!--        </dependency>-->
-        <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+<!--        <dependency>-->
+<!--            <groupId>com.sun.media</groupId>-->
+<!--            <artifactId>codec</artifactId>-->
+<!--            <version>1.0</version>-->
+<!--        </dependency>-->
+        <dependency>
+            <groupId>com.googlecode.soundlibs</groupId>
+            <artifactId>mp3spi</artifactId>
+            <version>1.9.5.4</version>
+        </dependency>
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>

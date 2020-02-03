@@ -94,8 +94,10 @@ public class AiServiceImp implements AiService {
         // 原MP3文件转AudioInputStream
         AudioInputStream mp3audioStream = AudioSystem.getAudioInputStream(mp3Stream);
         // 将AudioInputStream MP3文件 转换为PCM AudioInputStream
-        AudioInputStream pcmaudioStream = AudioSystem.getAudioInputStream(AudioFormat.Encoding.PCM_SIGNED,
-                mp3audioStream);
+        AudioFormat  baseFormat =mp3audioStream.getFormat();
+        AudioFormat  targetFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, baseFormat.getSampleRate(), 16,
+                baseFormat.getChannels(), baseFormat.getChannels() * 2, baseFormat.getSampleRate(), false);
+        AudioInputStream pcmaudioStream = AudioSystem.getAudioInputStream(targetFormat,mp3audioStream);
         byte[] pcmBytes = IOUtils.toByteArray(pcmaudioStream);
         pcmaudioStream.close();
         mp3audioStream.close();
