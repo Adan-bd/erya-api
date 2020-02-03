@@ -10,7 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 @MapperScan("spider.mapper")
 @SpringBootApplication
 @EnableEurekaClient
-@ComponentScan(basePackages = {"common","spider"})
+@ComponentScan(basePackages = {"common", "spider"})
 public class SpiderApplication {
     public static void main(String[] args) {
         SpringApplication.run(SpiderApplication.class, args);

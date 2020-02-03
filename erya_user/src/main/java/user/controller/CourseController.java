@@ -41,9 +41,9 @@ public class CourseController {
             course = new Course(id, (String) map.get("name"), (String) map.get("content"));
         } else {
             course = courseService.selectCourseById(id);
-            map.put("name",course.getName());
-            map.put("content",course.getContent());
-            hashOperations.putAll(id,map);
+            map.put("name", course.getName());
+            map.put("content", course.getContent());
+            hashOperations.putAll(id, map);
         }
         Result result = new Result(course);
         return ResponseEntity.status(HttpStatus.OK)

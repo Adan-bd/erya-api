@@ -11,7 +11,7 @@ public class EryaException extends RuntimeException {
 
     public EryaException(EryaEnum eryaEnum) {
         this.code = eryaEnum.getCode();
-        this.errMsg=eryaEnum.getErrMsg();
+        this.errMsg = eryaEnum.getErrMsg();
     }
 
     @Override

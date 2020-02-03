@@ -3,7 +3,6 @@ package admin.controller;
 
 import admin.pojo.Answer;
 import admin.service.AnswerService;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import common.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

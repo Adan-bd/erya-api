@@ -5,13 +5,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import spider.processor.EryaProcessor;
-import spider.service.SpiderService;
 
 @RestController("spider")
 public class SpiderController {
     private EryaProcessor eryaProcessor;
 
-    public SpiderController( EryaProcessor eryaProcessor) {
+    public SpiderController(EryaProcessor eryaProcessor) {
         this.eryaProcessor = eryaProcessor;
     }
 

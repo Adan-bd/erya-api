@@ -2,7 +2,6 @@ package admin.controller;
 
 import admin.pojo.Course;
 import admin.service.CourseService;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import common.exception.EryaEnum;
 import common.exception.EryaException;
 import common.vo.Result;
@@ -34,6 +33,7 @@ public class CourseController {
     public ResponseEntity<Result> delete(@RequestBody List<Integer> answers) {
         return ResponseEntity.status(HttpStatus.OK).body(new Result(courseService.deleteCourse(answers)));
     }
+
     @PostMapping("course/getCourse/{id}")
     public ResponseEntity<Result> answers(@PathVariable("id") int id) {
         return ResponseEntity.status(HttpStatus.OK)
@@ -42,13 +42,13 @@ public class CourseController {
 
     @PostMapping("course/modify")
     public ResponseEntity<Result> modify(@RequestBody Course course) {
-        if(course.getId()==0)
+        if (course.getId() == 0)
             throw new EryaException(EryaEnum.REQUEST_INVALID);
         HashOperations hashOperations = redisTemplate.opsForHash();
-        if(course.getName()!=null)
-            hashOperations.put(course.getId(),"name",course.getName());
-        if(course.getContent()!=null)
-            hashOperations.put(course.getId(),"content",course.getContent());
+        if (course.getName() != null)
+            hashOperations.put(course.getId(), "name", course.getName());
+        if (course.getContent() != null)
+            hashOperations.put(course.getId(), "content", course.getContent());
         return ResponseEntity.status(HttpStatus.OK).body(new Result(courseService.modifyCourse(course)));
     }
 

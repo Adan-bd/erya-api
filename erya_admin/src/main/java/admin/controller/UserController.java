@@ -2,7 +2,6 @@ package admin.controller;
 
 import admin.pojo.User;
 import admin.service.UserService;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import common.vo.Result;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

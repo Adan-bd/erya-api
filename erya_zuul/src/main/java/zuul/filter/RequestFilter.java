@@ -5,9 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import common.exception.EryaEnum;
-import common.exception.EryaException;
 import common.vo.Result;
-import org.apache.catalina.connector.Response;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -44,20 +42,20 @@ public class RequestFilter extends ZuulFilter {
     @lombok.SneakyThrows
     @Override
     public Object run() {
-        RequestContext requestContext= RequestContext.getCurrentContext();
+        RequestContext requestContext = RequestContext.getCurrentContext();
         HttpServletRequest request = requestContext.getRequest();
-        if(request.getRequestURI().matches("^/auth/.*")){
+        if (request.getRequestURI().matches("^/auth/.*")) {
             return null;
         }
         String token = request.getHeader("token");
         if (token == null) {
-            Result result=new Result(EryaEnum.REQUEST_INVALID);
+            Result result = new Result(EryaEnum.REQUEST_INVALID);
             checked(requestContext, result, HttpStatus.BAD_REQUEST);
             return null;
         }
         String roles = stringRedisTemplate.opsForValue().get(token);
         if (roles == null) {
-            Result result=new Result(EryaEnum.TOKEN_INVALID);
+            Result result = new Result(EryaEnum.TOKEN_INVALID);
             checked(requestContext, result, HttpStatus.UNAUTHORIZED);
             return null;
         }
@@ -69,7 +67,7 @@ public class RequestFilter extends ZuulFilter {
         response.setCharacterEncoding("UTF-8");
         response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
         response.setStatus(badRequest.value());
-        String responseBody=objectMapper.writeValueAsString(result);
+        String responseBody = objectMapper.writeValueAsString(result);
         requestContext.setResponse(response);
         requestContext.setResponseBody(responseBody);
     }

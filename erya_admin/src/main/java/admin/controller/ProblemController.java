@@ -1,9 +1,7 @@
 package admin.controller;
 
 
-import admin.pojo.Problem;
 import admin.service.ProblemService;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import common.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

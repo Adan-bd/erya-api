@@ -21,12 +21,14 @@ public class RabbitConfig {
     public Jackson2JsonMessageConverter producerJackson2MessageConverter() {
         return new Jackson2JsonMessageConverter();
     }
+
     @Bean
-    public Queue sendQueue(){
+    public Queue sendQueue() {
         return new Queue("user_notice");
     }
+
     @Bean
-    public Queue recieveQueue(){
+    public Queue recieveQueue() {
         return new Queue("spider");
     }
 }

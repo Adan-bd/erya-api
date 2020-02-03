@@ -9,14 +9,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Result {
-    private int code=200;
+    private int code = 200;
     private Object data;
 
     public Result(Object data) {
-        if(data instanceof EryaEnum){
-            this.code=((EryaEnum) data).getCode();
-            this.data=((EryaEnum) data).getErrMsg();
-        }else{
+        if (data instanceof EryaEnum) {
+            this.code = ((EryaEnum) data).getCode();
+            this.data = ((EryaEnum) data).getErrMsg();
+        } else {
             this.data = data;
         }
     }

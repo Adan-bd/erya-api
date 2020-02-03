@@ -41,7 +41,7 @@ public class CourseServiceImp implements CourseService {
     public IPage<Course> selectCourse(int pageNo, int pageSize, String search) {
         IPage<Course> page = new Page<>(pageNo, pageSize);
         QueryWrapper<Course> wrapper = new QueryWrapper<>();
-        wrapper.select("id","name");
+        wrapper.select("id", "name");
         wrapper.like("name", "%" + search + "%");
         return courseMapper.selectPage(page, wrapper);
     }

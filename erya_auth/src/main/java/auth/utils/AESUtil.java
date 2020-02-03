@@ -1,7 +1,6 @@
 package auth.utils;
 
 import org.apache.tomcat.util.codec.binary.Base64;
-import org.springframework.util.DigestUtils;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;

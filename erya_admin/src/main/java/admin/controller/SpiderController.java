@@ -2,7 +2,6 @@ package admin.controller;
 
 import admin.pojo.Spider;
 import admin.service.SpiderService;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import common.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -39,7 +39,7 @@ public class RabbitMQ {
                 "grant_type=client_credential&appid=wx155ae9b028f9ea16&secret=e621606fd1a0369415514b1858c63f58", Access_Token.class);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
-        SendRequest sendRequest = new SendRequest(openid,time);
+        SendRequest sendRequest = new SendRequest(openid, time);
         sendRequest.setTouser(openid);
         String data = question.length() > 20 ? question.substring(0, 16) : question;
         sendRequest.setData(new Template(new ReqData(data + " 等问题"), new ReqData("点击查看")));

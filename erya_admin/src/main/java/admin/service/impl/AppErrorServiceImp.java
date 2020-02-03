@@ -26,15 +26,15 @@ public class AppErrorServiceImp implements AppErrorService {
     public IPage<AppError> selectAppError(int pageNo, int pageSize, String search) {
         IPage<AppError> page = new Page<>(pageNo, pageSize);
         QueryWrapper<AppError> wrapper = new QueryWrapper<>();
-        wrapper.like("error","%"+search+"%");
+        wrapper.like("error", "%" + search + "%");
         return appErrorMapper.selectPage(page, wrapper);
     }
 
     @Override
     public int deleteAppError(List<Integer> AppErrorId) {
-        int res=0;
+        int res = 0;
         for (Integer id : AppErrorId) {
-            res+=appErrorMapper.deleteById(id);
+            res += appErrorMapper.deleteById(id);
         }
         return res;
     }

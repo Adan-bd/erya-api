@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @TableName("spider")
-public class Spider{
+public class Spider {
     @TableId(type = IdType.AUTO)
     private int id;
     private String question;
