@@ -1,5 +1,6 @@
 package user.controller;
 
+import common.vo.Result;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,8 +18,8 @@ public class AppErrorController {
     }
 
     @PostMapping("appErr/appReporter")
-    public ResponseEntity<Void> appReporter(@RequestBody AppError appError) {
+    public ResponseEntity<Result> appReporter(@RequestBody AppError appError) {
         appErrorService.insertAppError(appError);
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+        return ResponseEntity.status(HttpStatus.OK).body(new Result());
     }
 }

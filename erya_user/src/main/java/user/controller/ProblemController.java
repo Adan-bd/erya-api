@@ -1,5 +1,6 @@
 package user.controller;
 
+import common.vo.Result;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,8 +18,8 @@ public class ProblemController {
     }
 
     @PostMapping("problem/upload")
-    public ResponseEntity<Void> problem(@RequestBody Problem problem) {
+    public ResponseEntity<Result> problem(@RequestBody Problem problem) {
         problemService.insertProblem(problem);
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+        return ResponseEntity.status(HttpStatus.OK).body(new Result());
     }
 }
