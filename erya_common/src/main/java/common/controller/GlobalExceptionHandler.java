@@ -20,6 +20,7 @@ public class GlobalExceptionHandler {
         for (StackTraceElement stackTraceElement : stackTrace) {
             logger.error(stackTraceElement.toString());
         }
+        e.printStackTrace();
         if (e instanceof NoHandlerFoundException) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Result(404, e.getMessage()));
         } else if (e instanceof EryaException) {

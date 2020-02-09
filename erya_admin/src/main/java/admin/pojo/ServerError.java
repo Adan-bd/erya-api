@@ -10,7 +10,6 @@ import lombok.Data;
 public class ServerError {
     @TableId(type = IdType.AUTO)
     private int id;
-    private String question;
     private String time;
     private String dataerr;
 }

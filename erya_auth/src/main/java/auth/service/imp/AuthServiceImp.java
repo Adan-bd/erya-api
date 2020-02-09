@@ -28,19 +28,23 @@ public class AuthServiceImp implements AuthService {
 
     @Override
     public Map<String, String> login(User user) {
+        if (System.currentTimeMillis() - user.getTime() > 300000){
+            return null;
+        }
+        String password = user.getPassword();
+        byte[] bytes = Base64.decodeBase64(password);
+        String s = DigestUtils.md5DigestAsHex(String.valueOf(user.getTime()).getBytes());
+        String decrypt = null;
         try {
-            String password = user.getPassword();
-            byte[] bytes = Base64.decodeBase64(password);
-            String s = DigestUtils.md5DigestAsHex(String.valueOf(user.getTime()).getBytes());
-            String decrypt = AESUtil.decrypt(new String(bytes), s);
-            QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-            queryWrapper.eq("username", user.getUsername());
-            user = userMapper.selectOne(queryWrapper);
-            if (user != null && bCryptPasswordEncoder.matches(decrypt, user.getPassword())) {
-                return jwtUtil.createJWT(String.valueOf(user.getId()), user.getUsername(), user.getPermission());
-            }
+            decrypt = AESUtil.decrypt(new String(bytes), s);
         } catch (Exception e) {
             throw new EryaException(500, e.getMessage());
+        }
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("username", user.getUsername());
+        user = userMapper.selectOne(queryWrapper);
+        if (user != null && bCryptPasswordEncoder.matches(decrypt, user.getPassword())) {
+            return jwtUtil.createJWT(String.valueOf(user.getId()), user.getUsername(), user.getPermission());
         }
         return null;
     }
