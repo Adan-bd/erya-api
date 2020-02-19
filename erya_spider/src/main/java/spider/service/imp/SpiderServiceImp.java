@@ -1,5 +1,6 @@
 package spider.service.imp;
 
+import common.util.CommonUtil;
 import common.vo.Questions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -124,11 +125,12 @@ public class SpiderServiceImp implements SpiderService {
         List<String> list = new ArrayList<>();
         List<String> questions = spiderQuestion.getQuestions();
         for (String question : questions) {
+            String s = CommonUtil.escapeExprSpecialWord(question);
             Set<AnswerTemp> answer = findAnswer(question);
             if (answer.size() != 0) {
                 for (AnswerTemp answerTemp : answer) {
                     String question1 = answerTemp.getQuestion();
-                    if (question1.matches(".*" + question + ".*")) {
+                    if (question1.matches(".*" + s + ".*")) {
                         list.add(question);
                         break;
                     }
