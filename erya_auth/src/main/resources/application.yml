@@ -15,19 +15,14 @@ spring:
     jedis:
       pool:
         min-idle: 1
-        max-idle: 2
-        max-active: 2
+        max-idle: 20
+        max-active: 20
 #    host: 47.96.165.193
     password: YCH670989882@qq.com
   mvc:
     throw-exception-if-no-handler-found: true
   resources:
     add-mappings: false
-#  cache:
-#    type: redis
-#    redis:
-#      cache-null-values: false
-#      time-to-live: 30d
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
   typeAliasesPackage: auth.pojo

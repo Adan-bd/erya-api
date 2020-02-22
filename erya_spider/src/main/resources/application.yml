@@ -5,8 +5,8 @@ spring:
     name: erya-spider
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://39.96.54.89:3306/erya?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowPublicKeyRetrieval=true&serverTimezone=GMT%2B8
-#    url: jdbc:mysql://127.0.0.1:3306/erya?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowPublicKeyRetrieval=true&serverTimezone=GMT%2B8
+#    url: jdbc:mysql://39.96.54.89:3306/erya?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowPublicKeyRetrieval=true&serverTimezone=GMT%2B8
+    url: jdbc:mysql://127.0.0.1:3306/erya?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowPublicKeyRetrieval=true&serverTimezone=GMT%2B8
     username: root
     password: YCH670989882@qq.com
     hikari:
@@ -34,8 +34,8 @@ logging:
 eureka:
   client:
     service‐url:
-      defaultZone: http://39.96.54.89:8000/eureka
-#      defaultZone: http://127.0.0.1:8000/eureka
+#      defaultZone: http://39.96.54.89:8000/eureka
+      defaultZone: http://127.0.0.1:8000/eureka
   instance:
     prefer‐ip‐address: true
-    ip-address: 134.175.99.101
+#    ip-address: 134.175.99.101

@@ -1,6 +1,7 @@
 package Spider;
 
 import common.vo.Questions;
+import common.vo.Result;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,5 +25,7 @@ public class SpiderServiceTest {
 //        questions.setOpenid("o_pmG5PuiufQcNLSfjXVqoTzn2n4");
 //        questions.setQuestions(list);
 //        spiderService.findAnswer(questions);
+        Result result=new Result();
+        System.out.println(result.toString());
     }
 }

@@ -1,11 +1,10 @@
 server:
+#  port: 80
   port: 443
   ssl:
     key-store: classpath:api.erya.ychstudy.cn.pfx
-    key-store-password: 5s876qfhtg0l
+    key-store-password: 114h71a590385
     key-store-type: PKCS12
-#server:
-#  port: 80
 spring:
  application:
   name: erya-zuul #指定服务名
