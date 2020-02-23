@@ -6,7 +6,7 @@ import common.exception.EryaEnum;
 import common.exception.EryaException;
 import common.vo.Result;
 import org.springframework.data.redis.core.HashOperations;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,11 +16,11 @@ import java.util.List;
 @RestController
 public class CourseController {
     private CourseService courseService;
-    private RedisTemplate redisTemplate;
+    private StringRedisTemplate stringRedisTemplate;
 
-    public CourseController(CourseService courseService, RedisTemplate redisTemplate) {
+    public CourseController(CourseService courseService, StringRedisTemplate stringRedisTemplate) {
         this.courseService = courseService;
-        this.redisTemplate = redisTemplate;
+        this.stringRedisTemplate = stringRedisTemplate;
     }
 
     @PostMapping("course/{page}/{pageSize}")
@@ -44,11 +44,11 @@ public class CourseController {
     public ResponseEntity<Result> modify(@RequestBody Course course) {
         if (course.getId() == 0)
             throw new EryaException(EryaEnum.REQUEST_INVALID);
-        HashOperations hashOperations = redisTemplate.opsForHash();
+        HashOperations<String, Object, Object> hashOperations = stringRedisTemplate.opsForHash();
         if (course.getName() != null)
-            hashOperations.put(course.getId(), "name", course.getName());
+            hashOperations.put(String.valueOf(course.getId()), "name", course.getName());
         if (course.getContent() != null)
-            hashOperations.put(course.getId(), "content", course.getContent());
+            hashOperations.put(String.valueOf(course.getId()), "content", course.getContent());
         return ResponseEntity.status(HttpStatus.OK).body(new Result(courseService.modifyCourse(course)));
     }
 

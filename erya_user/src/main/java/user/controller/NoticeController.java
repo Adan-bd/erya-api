@@ -1,6 +1,6 @@
 package user.controller;
 
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,11 +12,11 @@ import java.util.Objects;
 
 @RestController
 public class NoticeController {
-    private RedisTemplate<String, String> redisTemplate;
+    private StringRedisTemplate stringRedisTemplate;
     private NoticeService noticeService;
 
-    public NoticeController(RedisTemplate<String, String> redisTemplate, NoticeService noticeService) {
-        this.redisTemplate = redisTemplate;
+    public NoticeController(StringRedisTemplate stringRedisTemplate, NoticeService noticeService) {
+        this.stringRedisTemplate = stringRedisTemplate;
         this.noticeService = noticeService;
     }
 
@@ -25,7 +25,7 @@ public class NoticeController {
         if (intent.equals("notice")) {
             return ResponseEntity.status(HttpStatus.OK).body(noticeService.getNotice());
         } else {
-            if (Objects.equals(redisTemplate.opsForValue().get("deploy"), "true"))
+            if (Objects.equals(stringRedisTemplate.opsForValue().get("deploy"), "true"))
                 return ResponseEntity.status(HttpStatus.OK).body("{\r\n" +
                         "    \"kouling\": \"打开支付宝首页搜“527812077”领红包(长按复制)\",\r\n" +
                         "    \"qitao\": \"坚定不移的发出想要0.1的声音\"\r\n" +
