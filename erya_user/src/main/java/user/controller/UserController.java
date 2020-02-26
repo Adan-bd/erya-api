@@ -24,7 +24,15 @@ public class UserController {
 
     @PostMapping("user/login/{code}")
     public ResponseEntity<Result> login(@PathVariable("code") String code) {
-        User user = userService.Login(code);
+        User user = userService.Login(code,"wx");
+        stringRedisTemplate.opsForValue().set(user.getOpenid(), String.valueOf(user.getNum()));
+        Result result = new Result(user);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
+
+    @PostMapping("user/qq/login/{code}")
+    public ResponseEntity<Result> qq_login(@PathVariable("code") String code) {
+        User user = userService.Login(code,"qq");
         stringRedisTemplate.opsForValue().set(user.getOpenid(), String.valueOf(user.getNum()));
         Result result = new Result(user);
         return ResponseEntity.status(HttpStatus.OK).body(result);

@@ -31,18 +31,39 @@ public class RabbitMQ {
         query.setTime(new Date(time));
         query.setContent(questions.getQuestions());
         queryMapper.insert(query);
-        sendNotify(questions.getQuestions().get(0), questions.getOpenid(), time);
+        switch (questions.getOrigin()) {
+            case "qq":
+                sendQQNotify(questions.getQuestions().get(0), questions.getOpenid(), time);
+                break;
+            default:
+                sendWXNotify(questions.getQuestions().get(0), questions.getOpenid(), time);
+                break;
+        }
     }
 
-    private void sendNotify(String question, String openid, long time) {
+    private void sendQQNotify(String question, String openid, long time) {
+        Access_Token access_token = restTemplate.getForObject("https://api.q.qq.com/api/getToken?" +
+                "grant_type=client_credential&appid=1109737611&secret=saDEVzkeRe5mi9uf", Access_Token.class);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json");
+        SendRequest sendRequest = new SendRequest(openid, time);
+        sendRequest.setTemplate_id("a367f9f5b5cbcddc6ee7efb56ec4ca6b");
+        String data = question.length() > 20 ? question.substring(0, 16) : question;
+        sendRequest.setData(new QQTemplate(new ReqData(data + " 等问题"), new ReqData("点击查看")));
+        HttpEntity<SendRequest> r = new HttpEntity<>(sendRequest, headers);
+        assert access_token != null;
+        restTemplate.postForObject("https://api.q.qq.com/api/json/subscribe/SendSubscriptionMessage?access_token=" + access_token.getAccess_token(), r, Void.class);
+    }
+
+    private void sendWXNotify(String question, String openid, long time) {
         Access_Token access_token = restTemplate.getForObject("https://api.weixin.qq.com/cgi-bin/token?" +
                 "grant_type=client_credential&appid=wx155ae9b028f9ea16&secret=e621606fd1a0369415514b1858c63f58", Access_Token.class);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
         SendRequest sendRequest = new SendRequest(openid, time);
-        sendRequest.setTouser(openid);
+        sendRequest.setTemplate_id("XRiWYJ2-pWtjMSA1tVa4Gr1rLN3wKzrEuZY_DOGjBmw");
         String data = question.length() > 20 ? question.substring(0, 16) : question;
-        sendRequest.setData(new Template(new ReqData(data + " 等问题"), new ReqData("点击查看")));
+        sendRequest.setData(new WxTemplate(new ReqData(data + " 等问题"), new ReqData("点击查看")));
         HttpEntity<SendRequest> r = new HttpEntity<>(sendRequest, headers);
         assert access_token != null;
         restTemplate.postForObject("https://api.weixin.qq.com/cgi-bin/message/subscribe/send?access_token=" + access_token.getAccess_token(), r, Void.class);
@@ -59,21 +80,29 @@ public class RabbitMQ {
     @Data
     private static class SendRequest {
         private String touser;
-        private String template_id = "XRiWYJ2-pWtjMSA1tVa4Gr1rLN3wKzrEuZY_DOGjBmw";
+        private String template_id;
         private String page = "pages/answer/answer?";
-        private Template data;
+        private Object data;
 
         public SendRequest(String openid, long time) {
             String param = "openid=" + openid + "&time=" + time;
             page += param;
+            this.touser = openid;
         }
     }
 
     @Data
     @AllArgsConstructor
-    private static class Template {
+    private static class WxTemplate {
         private ReqData thing1;
         private ReqData thing2;
+    }
+
+    @Data
+    @AllArgsConstructor
+    private static class QQTemplate {
+        private ReqData keyword1;
+        private ReqData keyword2;
     }
 
     @Data

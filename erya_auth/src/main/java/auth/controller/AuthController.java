@@ -31,7 +31,7 @@ public class AuthController {
         if (map == null) {
             return ResponseEntity.status(HttpStatus.OK).body(result);
         }
-        stringRedisTemplate.opsForValue().set(map.get("token"), map.get("roles"), Long.parseLong(map.get("expiretime")) - System.currentTimeMillis() - 10000, TimeUnit.MILLISECONDS);
+        stringRedisTemplate.opsForValue().set(map.get("token"), map.get("roles"), Long.parseLong(map.get("expiretime")) - System.currentTimeMillis(), TimeUnit.MILLISECONDS);
         result.setData(map);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }

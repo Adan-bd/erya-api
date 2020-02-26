@@ -82,6 +82,7 @@ public class AnswersServiceImp implements AnswersService {
             spiderQuestion.setQuestions(answerList);
             spiderQuestion.setOpenid(ques.getOpenid());
             spiderQuestion.setFlag(ques.isFlag());
+            spiderQuestion.setOrigin(ques.getOrigin());
             rabbitTemplate.convertAndSend("spider", spiderQuestion);
         }
         return answersList;

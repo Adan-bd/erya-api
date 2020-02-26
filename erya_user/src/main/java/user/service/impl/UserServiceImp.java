@@ -20,14 +20,35 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public User Login(String code) {
-        String openid = getOpenid(code);
+    public User Login(String code, String type) {
+        String openid = null;
+        switch (type) {
+            case "wx":
+                openid = getOpenid(code);
+                break;
+            case "qq":
+                openid = getQQOpenid(code);
+                break;
+            default:
+                break;
+        }
+
         User user = userMapper.selectById(openid);
         if (user == null) {
             userMapper.insertByOpenid(openid);
-            user = userMapper.selectById(openid);
+            user = new User(openid,5);
         }
         return user;
+    }
+
+    private String getQQOpenid(String code) {
+        Login login = restTemplate.getForObject(
+                "https://api.q.qq.com/sns/jscode2session?" +
+                        "appid=1109737611&secret=saDEVzkeRe5mi9uf&js_code="
+                        + code + "&grant_type=authorization_code", Login.class);
+        if (login != null)
+            return login.getOpenid();
+        return null;
     }
 
     private String getOpenid(String code) {
