@@ -12,6 +12,7 @@ import user.mapper.QueryMapper;
 import user.pojo.Query;
 
 import java.util.Date;
+import java.util.Objects;
 
 @Component
 public class RabbitMQ {
@@ -51,8 +52,7 @@ public class RabbitMQ {
         String data = question.length() > 20 ? question.substring(0, 16) : question;
         sendRequest.setData(new QQTemplate(new ReqData(data + " 等问题"), new ReqData("点击查看")));
         HttpEntity<SendRequest> r = new HttpEntity<>(sendRequest, headers);
-        assert access_token != null;
-        restTemplate.postForObject("https://api.q.qq.com/api/json/subscribe/SendSubscriptionMessage?access_token=" + access_token.getAccess_token(), r, Void.class);
+        restTemplate.postForObject("https://api.q.qq.com/api/json/subscribe/SendSubscriptionMessage?access_token=" + Objects.requireNonNull(access_token).getAccess_token(), r, Void.class);
     }
 
     private void sendWXNotify(String question, String openid, long time) {
@@ -65,10 +65,7 @@ public class RabbitMQ {
         String data = question.length() > 20 ? question.substring(0, 16) : question;
         sendRequest.setData(new WxTemplate(new ReqData(data + " 等问题"), new ReqData("点击查看")));
         HttpEntity<SendRequest> r = new HttpEntity<>(sendRequest, headers);
-        assert access_token != null;
-        restTemplate.postForObject("https://api.weixin.qq.com/cgi-bin/message/subscribe/send?access_token=" + access_token.getAccess_token(), r, Void.class);
-//        String s = restTemplate.postForObject("https://api.weixin.qq.com/cgi-bin/message/subscribe/send?access_token=" + access_token.getAccess_token(), r, String.class);
-//        System.out.println(s);
+        restTemplate.postForObject("https://api.weixin.qq.com/cgi-bin/message/subscribe/send?access_token=" + Objects.requireNonNull(access_token).getAccess_token(), r, Void.class);
     }
 
     @Data
