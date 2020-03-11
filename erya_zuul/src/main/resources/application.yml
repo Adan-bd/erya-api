@@ -18,15 +18,15 @@ spring:
        min-idle: 1
        max-idle: 2
        max-active: 2
-#   host: 134.175.99.101
+   host: 134.175.99.101
    password: YCH670989882@qq.com
 eureka:
   client:
     service‐url:
-      defaultZone: http://127.0.0.1:8000/eureka
-#      defaultZone: http://ychstudy.cn:8000//eureka
+      defaultZone: http://39.102.33.135:8000/eureka
   instance:
     prefer‐ip‐address: true
+    ip-address: 39.96.54.89
 zuul:
   routes:
     erya-user:

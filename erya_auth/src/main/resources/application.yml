@@ -13,7 +13,7 @@ spring:
         min-idle: 1
         max-idle: 20
         max-active: 20
-#    host: 47.96.165.193
+    host: 47.96.165.193
     password: YCH670989882@qq.com
   mvc:
     throw-exception-if-no-handler-found: true
@@ -27,14 +27,13 @@ spring:
         driver-class-name: com.mysql.cj.jdbc.Driver
         username: root
         password: YCH670989882@qq.com
-        jdbc-url: jdbc:mysql://47.96.165.193:3306/erya?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowPublicKeyRetrieval=true&serverTimezone=GMT%2B8
+        jdbc-url: jdbc:mysql://39.102.33.135:3306/erya?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowPublicKeyRetrieval=true&serverTimezone=GMT%2B8
       slave:
         type: com.zaxxer.hikari.HikariDataSource
         driver-class-name: com.mysql.cj.jdbc.Driver
         username: root
         password: YCH670989882@qq.com
-        jdbc-url: jdbc:mysql://134.175.99.101:3306/erya?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowPublicKeyRetrieval=true&serverTimezone=GMT%2B8
-#        jdbc-url: jdbc:mysql://47.96.165.193:3306/erya?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowPublicKeyRetrieval=true&serverTimezone=GMT%2B8
+        jdbc-url: jdbc:mysql://39.96.54.89:3306/erya?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowPublicKeyRetrieval=true&serverTimezone=GMT%2B8
     masterslave:
       load-balance-algorithm-type: round_robin
       master-data-source-name: master
@@ -55,9 +54,10 @@ logging:
 eureka:
   client:
     service‐url:
-      defaultZone: http://127.0.0.1:8000/eureka
+      defaultZone: http://39.102.33.135:8000/eureka
   instance:
     prefer‐ip‐address: true
+    ip-address: 39.96.54.89
 jwt:
  config:
   key: erya
