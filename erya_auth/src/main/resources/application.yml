@@ -13,7 +13,7 @@ spring:
         min-idle: 1
         max-idle: 20
         max-active: 20
-    host: 47.96.165.193
+    host: 39.96.54.89
     password: YCH670989882@qq.com
   mvc:
     throw-exception-if-no-handler-found: true
