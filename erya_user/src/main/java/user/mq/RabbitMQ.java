@@ -32,13 +32,10 @@ public class RabbitMQ {
         query.setTime(new Date(time));
         query.setContent(questions.getQuestions());
         queryMapper.insert(query);
-        switch (questions.getOrigin()) {
-            case "qq":
-                sendQQNotify(questions.getQuestions().get(0), questions.getOpenid(), time);
-                break;
-            default:
-                sendWXNotify(questions.getQuestions().get(0), questions.getOpenid(), time);
-                break;
+        if (questions.getOrigin() == null) {
+            sendWXNotify(questions.getQuestions().get(0), questions.getOpenid(), time);
+        } else {
+            sendQQNotify(questions.getQuestions().get(0), questions.getOpenid(), time);
         }
     }
 
