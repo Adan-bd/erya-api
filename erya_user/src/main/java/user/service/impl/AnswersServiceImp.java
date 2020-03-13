@@ -107,7 +107,7 @@ public class AnswersServiceImp implements AnswersService {
     @Override
     public List<String> selectQuestions(String openid, Long time) {
         if (time % 1000 >= 500) {
-            time += time;
+            time += 500;
         }
         QueryWrapper<Query> queryWrapper = new QueryWrapper<>();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

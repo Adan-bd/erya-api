@@ -18,7 +18,7 @@ spring:
        min-idle: 1
        max-idle: 2
        max-active: 2
-   host: 134.175.99.101
+   host: 39.96.54.89
    password: YCH670989882@qq.com
 eureka:
   client:
