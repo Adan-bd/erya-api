@@ -43,10 +43,10 @@ public class SpiderServiceImp implements SpiderService {
         list.add(chaoxing360Imp);
     }
 
-    @Autowired
-    public void setDxszxwImp(DxszxwImp dxszxwImp) {
-        list.add(dxszxwImp);
-    }
+//    @Autowired
+//    public void setDxszxwImp(DxszxwImp dxszxwImp) {
+//        list.add(dxszxwImp);
+//    }
 
     @Autowired
     public void setFm210Imp(Fm210Imp fm210Imp) {
@@ -93,14 +93,19 @@ public class SpiderServiceImp implements SpiderService {
 //        list.add(zwxq520Imp);
 //    }
 
+//    @Autowired
+//    public void setXuanxiu365Imp(Xuanxiu365Imp xuanxiu365Imp) {
+//        list.add(xuanxiu365Imp);
+//    }
+
     @Autowired
-    public void setXuanxiu365Imp(Xuanxiu365Imp xuanxiu365Imp) {
-        list.add(xuanxiu365Imp);
+    public void setXueXiaoYiImp(XueXiaoYiImp XueXiaoYiImp) {
+        list.add(XueXiaoYiImp);
     }
 
     public Set<AnswerTemp> findAnswer(String question) {
-        String url = "https://www.yosonia.cn/page/1?s=";
-        eryaPagesListProcessor.start(url + question, 1, 3000);
+//        String url = "https://www.yosonia.cn/page/1?s=";
+//        eryaPagesListProcessor.start(url + question, 1, 3000);
         List<Future<Set<AnswerTemp>>> lists = new ArrayList<>(list.size());
         for (SimpleSpiderService simpleSpiderService : list) {
             lists.add(taskExecutor.submit(new myThread(simpleSpiderService, question)));
