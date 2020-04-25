@@ -1,11 +1,17 @@
 package Spider;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import common.vo.Result;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import spider.mapper.TempCourseMapper;
+import spider.mapper.TempUrlMapper;
+import spider.pojo.TempUrl;
+import spider.processor.YosoniaDetailProcessor;
+import spider.processor.YosoniaPageListProcessor;
 import spider.service.SpiderService;
 import spider.service.imp.*;
 
@@ -83,4 +89,66 @@ public class SpiderServiceTest {
 //    public void testXuanxiu365() {
 //        xuanxiu365Imp.findAnswer("测试一下新接口");
 //    }
+
+    @Autowired
+    private YosoniaPageListProcessor yosoniaPageListProcessor;
+
+    @Autowired
+    private TempUrlMapper tempUrlMapper;
+
+    @Autowired
+    private TempCourseMapper tempCourseMapper;
+
+    @Test
+    public void testYosonnia() throws InterruptedException {
+//        for (int i = 1; i <= 4416; i++) {
+//            yosoniaPageListProcessor.start("https://www.yosonia.cn/uncategorized/page/" + i, 1, 10000);
+//            Thread.sleep(5000);
+//        }
+    }
+
+    @Autowired
+    private YosoniaDetailProcessor yosoniaDetailProcessor;
+
+    @Test
+    public void testYosoniaDetail() {
+        QueryWrapper<TempUrl> queryWrapper = new QueryWrapper<>();
+        queryWrapper.ge("id", 3876);
+//        List<TempUrl> tempUrls = tempUrlMapper.selectList(queryWrapper);
+//        tempUrls.forEach((tempUrl -> {
+//            yosoniaDetailProcessor.start(tempUrl.getUrl(), 1, 10000);
+//            try {
+//                Thread.sleep(5000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }));
+
+//        for (TempUrl tempUrl : tempUrls) {
+//            yosoniaDetailProcessor.start(tempUrl.getUrl(), 1, 1000);
+//        }
+    }
+
+    @Test
+    public void testDeleteRepeat() {
+//        List<TempUrl> tempUrls = tempUrlMapper.selectList(null);
+//        Set<TempUrl> tempUrlSet = new HashSet<>();
+//        tempUrls.forEach(tempUrl -> {
+//            if (tempUrlSet.contains(tempUrl)) {
+//                tempUrlMapper.deleteById(tempUrl.getId());
+//            } else {
+//                tempUrlSet.add(tempUrl);
+//            }
+//        });
+//        List<TempCourse> tempCourses = tempCourseMapper.selectList(null);
+//        Set<TempCourse> tempCourseSet = new HashSet<>();
+//        tempCourses.forEach(tempCourse -> {
+//            if (tempCourseSet.contains(tempCourse)) {
+//                tempUrlMapper.deleteById(tempCourse.getId());
+//            } else {
+//                tempCourseSet.add(tempCourse);
+//            }
+//        });
+//
+    }
 }
