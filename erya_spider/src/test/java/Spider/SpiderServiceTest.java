@@ -39,7 +39,7 @@ public class SpiderServiceTest {
 
     @Test
     public void testXueXiaoYi() {
-        xueXiaoYiImp.findAnswer("测试一下新接口");
+//        xueXiaoYiImp.findAnswer("测试一下新接口");
     }
 
     @Autowired
@@ -47,7 +47,7 @@ public class SpiderServiceTest {
 
     @Test
     public void testChaoXing360() {
-        chaoxing360Imp.findAnswer("测试一下新接口");
+//        chaoxing360Imp.findAnswer("测试一下新接口");
     }
 
     @Autowired
@@ -71,7 +71,7 @@ public class SpiderServiceTest {
 
     @Test
     public void testXiaofan() {
-        xueXiaoYiImp.findAnswer("测试一下新接口");
+        xiaofanImp.findAnswer("测试一下新接口");
     }
 
     @Autowired
@@ -79,7 +79,7 @@ public class SpiderServiceTest {
 
     @Test
     public void testYosonia() {
-        yosoniaImp.findAnswer("测试一下新接口");
+//        yosoniaImp.findAnswer("测试一下新接口");
     }
 
 //    @Autowired

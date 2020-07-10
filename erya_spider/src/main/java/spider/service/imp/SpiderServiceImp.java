@@ -14,10 +14,7 @@ import spider.processor.EryaPagesListProcessor;
 import spider.service.SimpleSpiderService;
 import spider.service.SpiderService;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -38,25 +35,25 @@ public class SpiderServiceImp implements SpiderService {
         this.rabbitTemplate = rabbitTemplate;
     }
 
-    @Autowired
-    public void setChaoxing360Imp(Chaoxing360Imp chaoxing360Imp) {
-        list.add(chaoxing360Imp);
-    }
+//    @Autowired
+//    public void setChaoxing360Imp(Chaoxing360Imp chaoxing360Imp) {
+//        list.add(chaoxing360Imp);
+//    }
 
 //    @Autowired
 //    public void setDxszxwImp(DxszxwImp dxszxwImp) {
 //        list.add(dxszxwImp);
 //    }
 
-    @Autowired
-    public void setFm210Imp(Fm210Imp fm210Imp) {
-        list.add(fm210Imp);
-    }
+//    @Autowired
+//    public void setFm210Imp(Fm210Imp fm210Imp) {
+//        list.add(fm210Imp);
+//    }
 
-    @Autowired
-    public void setHan8Imp(Han8Imp han8Imp) {
-        list.add(han8Imp);
-    }
+//    @Autowired
+//    public void setHan8Imp(Han8Imp han8Imp) {
+//        list.add(han8Imp);
+//    }
 
 //    @Autowired
 //    public void setNavbtcImp(NavbtcImp navbtcImp) {
@@ -83,10 +80,10 @@ public class SpiderServiceImp implements SpiderService {
         list.add(xiaofanImp);
     }
 
-    @Autowired
-    public void setYosoniaImp(YosoniaImp yosoniaImp) {
-        list.add(yosoniaImp);
-    }
+//    @Autowired
+//    public void setYosoniaImp(YosoniaImp yosoniaImp) {
+//        list.add(yosoniaImp);
+//    }
 
 //    @Autowired
 //    public void setZwxq520Imp(Zwxq520Imp zwxq520Imp) {

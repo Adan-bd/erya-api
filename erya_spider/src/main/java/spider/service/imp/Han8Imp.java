@@ -23,7 +23,8 @@ public class Han8Imp implements SimpleSpiderService {
 
     @Override
     public Set<AnswerTemp> findAnswer(String question) {
-        String url = "https://api.han8.net/api/ti.ku?key=wym520&ti=";
+//        String url = "https://api.han8.net/api/ti.ku?key=wym520&ti=";
+        String url = "https://www.vvhan.com/HanWxApi/wkApi.php?key=hansApi-1655466387&times="+System.currentTimeMillis()+"&ti=";
         Han8 han8 = restTemplate.getForObject(url + question, Han8.class);
         logger.info(Objects.requireNonNull(han8).toString());
         Set<AnswerTemp> answerTemps = new HashSet<>();
